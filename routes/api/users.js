@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../../config/keys');
+const passport = require('passport');
 
 // load user model
 const User = require('../../models/User');
@@ -54,7 +57,7 @@ router.post('/register', async (req, res) => {
 
 /*
   @route    GET api/users/login
-  @desc     login user
+  @desc     login user (returning jwt )
   @access   public
 */
 router.post('/login', async (req, res) => {
@@ -65,11 +68,41 @@ router.post('/login', async (req, res) => {
   bcrypt.compare(password, user.password, (err, isMatch) => {
     console.log(isMatch);
     if (isMatch) {
-      res.json({ msg: 'success' });
+      // res.json({ msg: 'success' });
+      // user matched
+
+      const payload = { id: user.id, name: user.name, avatar: user.avatar }; // create jwt payload
+
+      // sign token
+      jwt.sign(payload, keys.secret, { expiresIn: 3600 }, (err, token) => {
+        res.json({
+          success: true,
+          token: 'Bearer ' + token,
+        });
+        console.log('here login', token);
+      });
     } else {
       return res.status(400).json({ password: 'password incorrect' });
     }
   });
 });
+
+/*
+  @route    GET api/users/current
+  @desc     return current user
+  @access   private
+*/
+router.post(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const { id, name, email } = req.user;
+    res.json({
+      id,
+      name,
+      email,
+    });
+  },
+);
 
 module.exports = router;
