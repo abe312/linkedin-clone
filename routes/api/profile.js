@@ -22,10 +22,9 @@ router.get(
     const errors = {};
 
     try {
-      const profile = await Profile.findOne({ user: req.user.id }).populate(
-        'user',
-        ['name', 'avatar'],
-      );
+      const profile = await Profile.findOne({
+        user: req.user.id,
+      }).populate('user', ['name', 'avatar']);
       if (!profile) {
         errors.noprofile = 'There is no profile for this user';
         return res.status(404).json(errors);
@@ -34,7 +33,7 @@ router.get(
     } catch (err) {
       res.status(404).json(err);
     }
-  },
+  }
 );
 
 // @route POST api/profile
@@ -87,19 +86,20 @@ router.post(
 
     fields.social = {};
 
-    const { youtube, facebook, twitter, instagram } = req.body;
+    const { youtube, facebook, twitter, instagram, linkedin } = req.body;
     fields.social.youtube = youtube;
     fields.social.facebook = facebook;
     fields.social.twitter = twitter;
     fields.social.instagram = instagram;
-
+    fields.social.linkedin = linkedin;
+    console.log(linkedin);
     const profileExists = await Profile.findOne({ user });
     if (profileExists) {
       //update
       const profile = await Profile.findOneAndUpdate(
         { user },
         { $set: fields },
-        { new: true },
+        { new: true }
       );
       res.json(profile);
     } else {
@@ -116,7 +116,7 @@ router.post(
       profile = await new Profile(fields).save();
       res.json(profile);
     }
-  },
+  }
 );
 
 // @routeGET api/profile/hanlde/:handle
@@ -215,7 +215,7 @@ router.post(
 
     profile = await profile.save();
     res.json(profile);
-  },
+  }
 );
 
 // @route   DELETE api/profile/experience
@@ -241,7 +241,7 @@ router.delete(
     } catch (err) {
       res.status(400).json(err);
     }
-  },
+  }
 );
 
 // @route   POST api/profile/education
@@ -275,7 +275,7 @@ router.post(
 
     profile = await profile.save();
     res.json(profile);
-  },
+  }
 );
 
 // @route   DELETE api/profile/education
@@ -301,7 +301,7 @@ router.delete(
     } catch (err) {
       res.status(400).json(err);
     }
-  },
+  }
 );
 
 // @route   DELETE api/profile/education
@@ -316,7 +316,7 @@ router.delete(
     await Profile.findOneAndRemove({ user: id });
     await User.findOneAndRemove({ _id: id });
     res.json({ success: true });
-  },
+  }
 );
 
 module.exports = router;

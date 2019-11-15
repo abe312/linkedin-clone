@@ -92,6 +92,7 @@ const ProfileSchema = new Schema({
     twitter: String,
     facebook: String,
     instagram: String,
+    linkedin: String,
   },
 
   date: {
