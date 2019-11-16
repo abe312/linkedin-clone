@@ -167,7 +167,7 @@ router.post(
     const { errors, isValid } = validatePostInput(req.body);
 
     if (!isValid) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
 
     const user = req.user.id;
@@ -187,7 +187,7 @@ router.post(
       post = await post.save();
       res.json(post);
     } catch (e) {
-      res.status(400).json({ err: 'some error occured | post not found ' });
+      return res.status(400).json({ err: 'some error occured | post not found ' });
     }
   },
 );
