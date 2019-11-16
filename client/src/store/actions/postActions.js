@@ -7,10 +7,12 @@ import {
   POST_LOADING,
   DELETE_POST,
   GET_POST,
+  CLEAR_ERRORS,
 } from './types';
 
 // Add post
 export const addPost = postData => async dispatch => {
+  dispatch(clearErrors());
   try {
     let res = await axios.post('/api/posts', postData);
     dispatch({
@@ -110,6 +112,7 @@ export const getPost = id => async dispatch => {
 
 // Add comment
 export const addComment = (postId, commentData) => async dispatch => {
+  dispatch(clearErrors());
   try {
     let res = await axios.post(`/api/posts/comment/${postId}`, commentData);
     dispatch({
@@ -138,4 +141,11 @@ export const deleteComment = (postId, commentId) => async dispatch => {
       payload: e.response.data,
     });
   }
+};
+
+// Clear errors
+export const clearErrors = () => {
+  return {
+    type: CLEAR_ERRORS,
+  };
 };
