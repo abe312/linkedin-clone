@@ -19,7 +19,8 @@
     "validator": "^11.1.0"
   },
   "engines": {
-    "node": "10.16.0"
+    "node": "10.16.0",
+    "npm": "6.11.3"
   },
   "devDependencies": {
     "concurrently": "^5.0.0",
