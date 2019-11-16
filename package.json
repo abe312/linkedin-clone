@@ -18,6 +18,9 @@
     "passport-jwt": "^4.0.0",
     "validator": "^11.1.0"
   },
+  "engines": {
+    "node": "10.16.0"
+  },
   "devDependencies": {
     "concurrently": "^5.0.0",
     "eslint": "^6.6.0",
