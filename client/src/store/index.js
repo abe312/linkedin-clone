@@ -12,14 +12,14 @@ if (process.env.NODE_ENV === 'production') {
   store = createStore(
     rootReducer,
     initialState,
-    compose(applyMiddleware(...middleware))
+    compose(applyMiddleware(...middlewares))
   );
 } else {
   store = createStore(
     rootReducer,
     initialState,
     compose(
-      applyMiddleware(...middleware),
+      applyMiddleware(...middlewares),
       window.__REDUX_DEVTOOLS_EXTENSION__ &&
         window.__REDUX_DEVTOOLS_EXTENSION__()
     )
