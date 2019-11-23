@@ -128,7 +128,7 @@ router.post(
       name,
       email,
     });
-  },
+  }
 );
 
 module.exports = router;
