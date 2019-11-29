@@ -1,4 +1,4 @@
-## (live link)[https://agile-earth-77384.herokuapp.com/]
+## [Heroku live link](https://agile-earth-77384.herokuapp.com/)
 
 ---
 
